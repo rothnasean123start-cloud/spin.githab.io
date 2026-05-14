@@ -3,92 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lucky Spin Wheel - ហ្គេមបង្វិលកងសំណាង</title>
+    <title>Lucky Spin Wheel Customizer</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Kantumruy+Pro:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Kantumruy Pro', 'Inter', sans-serif;
+            font-family: 'Kantumruy Pro', sans-serif;
             background: radial-gradient(circle, #1a1a2e 0%, #16213e 100%);
-            overflow-x: hidden;
         }
-
-        .wheel-container {
-            perspective: 1000px;
-        }
-
         #wheel {
             transition: transform 5s cubic-bezier(0.15, 0, 0.15, 1);
-            filter: drop-shadow(0 10px 25px rgba(0,0,0,0.5));
-        }
-
-        .pointer {
-            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));
-            z-index: 20;
-        }
-
-        /* Glowing effect for the button */
-        .btn-glow:hover {
-            box-shadow: 0 0 20px rgba(52, 211, 153, 0.6);
-            transform: scale(1.05);
-        }
-
-        .btn-glow:active {
-            transform: scale(0.95);
-        }
-
-        /* Custom Modal animation */
-        @keyframes popIn {
-            0% { transform: scale(0.8); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-        .animate-pop {
-            animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col items-center justify-center p-4">
+<body class="min-h-screen p-4 md:p-8 text-white">
 
-    <div class="text-center mb-8">
-        <h1 class="text-4xl md:text-5xl font-bold text-white mb-2 tracking-tight">
-            បង្វិលកង <span class="text-emerald-400">សំណាង</span>
-        </h1>
-        <p class="text-gray-400">សាកល្បងសំណាងរបស់អ្នកដើម្បីឈ្នះរង្វាន់ដ៏អស្ចារ្យ!</p>
-    </div>
-
-    <div class="relative wheel-container mb-8">
-        <!-- Pointer (ម្ជុលចង្អុល) -->
-        <div class="pointer absolute top-[-20px] left-1/2 -translate-x-1/2 w-10 h-12 bg-red-500" style="clip-path: polygon(50% 100%, 0 0, 100% 0);">
-            <div class="w-full h-1/2 bg-red-600"></div>
-        </div>
-
-        <!-- The Wheel (កងបង្វិល) -->
-        <canvas id="wheel" width="400" height="400" class="rounded-full border-8 border-slate-800"></canvas>
-
-        <!-- Center Hub -->
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-white rounded-full border-4 border-slate-800 shadow-xl z-10 flex items-center justify-center">
-            <div class="w-4 h-4 bg-slate-800 rounded-full"></div>
-        </div>
-    </div>
-
-    <div class="flex flex-col items-center gap-4">
-        <button id="spinBtn" class="btn-glow px-10 py-4 bg-emerald-500 hover:bg-emerald-400 text-slate-900 font-bold text-xl rounded-full transition-all duration-300 shadow-lg">
-            ចាប់ផ្ដើមបង្វិល
-        </button>
+    <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
         
-        <div id="status" class="text-emerald-400 font-medium h-6"></div>
+        <!-- ផ្នែកខាងឆ្វេង៖ កងបង្វិល -->
+        <div class="flex flex-col items-center">
+            <!-- ចំណងជើងដែលអាចផ្លាស់ប្តូរបាន -->
+            <h1 id="appTitle" class="text-3xl md:text-5xl font-bold mb-2 text-center bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-cyan-400">
+                បង្វិលកង សំណាង
+            </h1>
+            <p id="appSubtitle" class="text-gray-400 mb-8">សាកល្បងសំណាងរបស់អ្នក!</p>
+
+            <div class="relative mb-8">
+                <div class="absolute top-[-20px] left-1/2 -translate-x-1/2 w-10 h-12 bg-red-500 z-20" style="clip-path: polygon(50% 100%, 0 0, 100% 0);"></div>
+                <canvas id="wheel" width="400" height="400" class="rounded-full border-8 border-slate-800 shadow-2xl"></canvas>
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-white rounded-full border-4 border-slate-800 z-10 flex items-center justify-center">
+                    <div class="w-3 h-3 bg-slate-800 rounded-full"></div>
+                </div>
+            </div>
+
+            <button id="spinBtn" class="px-12 py-4 bg-emerald-500 hover:bg-emerald-400 text-slate-900 font-bold text-xl rounded-full transition-all shadow-lg active:scale-95">
+                ចាប់ផ្ដើមបង្វិល
+            </button>
+        </div>
+
+        <!-- ផ្នែកខាងស្តាំ៖ ការកំណត់ (Settings) -->
+        <div class="bg-slate-800/50 p-6 rounded-3xl border border-slate-700 shadow-xl">
+            <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
+                ⚙️ ការកំណត់កម្មវិធី
+            </h2>
+            
+            <!-- ផ្នែកដូរឈ្មោះចំណងជើង -->
+            <div class="mb-6 space-y-4 p-4 bg-slate-900/50 rounded-2xl border border-slate-700">
+                <div>
+                    <label class="block text-emerald-400 text-sm mb-1">ប្តូរចំណងជើងធំ:</label>
+                    <input type="text" id="titleInput" placeholder="វាយឈ្មោះកម្មវិធីនៅទីនេះ..." 
+                        class="w-full bg-slate-800 border border-slate-600 rounded-lg px-4 py-2 focus:border-emerald-500 outline-none">
+                </div>
+                <div>
+                    <label class="block text-emerald-400 text-sm mb-1">ប្តូរចំណងជើងតូច (Subtitle):</label>
+                    <input type="text" id="subtitleInput" placeholder="វាយការពិពណ៌នានៅទីនេះ..." 
+                        class="w-full bg-slate-800 border border-slate-600 rounded-lg px-4 py-2 focus:border-emerald-500 outline-none">
+                </div>
+            </div>
+
+            <!-- ផ្នែកកំណត់នាទី -->
+            <div class="mb-6">
+                <label class="block text-gray-400 mb-2">រយៈពេលបង្វិល (វិនាទី):</label>
+                <input type="number" id="durationInput" value="5" min="1" max="20" 
+                    class="w-full bg-slate-900 border border-slate-600 rounded-lg px-4 py-2 focus:border-emerald-500 outline-none">
+            </div>
+
+            <!-- ផ្នែកគ្រប់គ្រងរង្វាន់ -->
+            <div class="mb-4">
+                <label class="block text-gray-400 mb-2">បញ្ជីរង្វាន់:</label>
+                <div id="prizeInputs" class="space-y-2 max-h-[300px] overflow-y-auto pr-2"></div>
+            </div>
+
+            <button id="addPrizeBtn" class="w-full py-2 border-2 border-dashed border-slate-600 text-slate-400 rounded-lg hover:border-emerald-500 hover:text-emerald-500 transition-colors">
+                + បន្ថែមរង្វាន់ថ្មី
+            </button>
+        </div>
     </div>
 
-    <!-- Result Modal (ផ្ទាំងបង្ហាញលទ្ធផល) -->
+    <!-- Modal លទ្ធផល -->
     <div id="modal" class="fixed inset-0 bg-black/80 hidden items-center justify-center z-50 p-4">
-        <div class="bg-slate-900 border-2 border-emerald-500 p-8 rounded-3xl max-w-sm w-full text-center animate-pop">
+        <div class="bg-slate-900 border-2 border-emerald-500 p-8 rounded-3xl max-w-sm w-full text-center">
             <div class="text-5xl mb-4">🎉</div>
-            <h2 class="text-2xl font-bold text-white mb-2">អបអរសាទរ!</h2>
+            <h2 class="text-2xl font-bold mb-2">អបអរសាទរ!</h2>
             <p class="text-gray-300 mb-6">អ្នកទទួលបាន:</p>
-            <div id="prizeResult" class="text-3xl font-bold text-emerald-400 mb-8 px-4 py-2 bg-emerald-500/10 rounded-xl"></div>
-            <button id="closeModal" class="w-full py-3 bg-emerald-500 hover:bg-emerald-400 text-slate-900 font-bold rounded-xl transition-colors">
-                យល់ព្រម
-            </button>
+            <div id="prizeResult" class="text-2xl font-bold text-emerald-400 mb-8 px-4 py-2 bg-emerald-500/10 rounded-xl border border-emerald-500/20"></div>
+            <button id="closeModal" class="w-full py-3 bg-emerald-500 text-slate-900 font-bold rounded-xl hover:bg-emerald-400 transition-colors">យល់ព្រម</button>
         </div>
     </div>
 
@@ -96,57 +95,84 @@
         const canvas = document.getElementById('wheel');
         const ctx = canvas.getContext('2d');
         const spinBtn = document.getElementById('spinBtn');
-        const statusText = document.getElementById('status');
-        const modal = document.getElementById('modal');
-        const prizeResult = document.getElementById('prizeResult');
-        const closeModal = document.getElementById('closeModal');
+        const titleInput = document.getElementById('titleInput');
+        const subtitleInput = document.getElementById('subtitleInput');
+        const appTitle = document.getElementById('appTitle');
+        const appSubtitle = document.getElementById('appSubtitle');
+        const durationInput = document.getElementById('durationInput');
+        const prizeInputsContainer = document.getElementById('prizeInputs');
+        const addPrizeBtn = document.getElementById('addPrizeBtn');
 
-        const prizes = [
-            { text: "រង្វាន់ធំ $100", color: "#f59e0b" },
+        let prizes = [
+            { text: "រង្វាន់ $10", color: "#f59e0b" },
             { text: "សាកល្បងម្ដងទៀត", color: "#334155" },
-            { text: "បញ្ចុះតម្លៃ ៥០%", color: "#10b981" },
-            { text: "អត់សំណាងទេ", color: "#64748b" },
-            { text: "កាតទឹកប្រាក់ ១$", color: "#3b82f6" },
-            { text: "រង្វាន់ពិសេស", color: "#8b5cf6" },
-            { text: "កាដូភ្ញាក់ផ្អើល", color: "#ec4899" },
+            { text: "បញ្ចុះតម្លៃ ២០%", color: "#10b981" },
+            { text: "អត់រង្វាន់", color: "#64748b" },
+            { text: "កាដូពិសេស", color: "#8b5cf6" },
             { text: "ស៊យហើយ!", color: "#ef4444" }
         ];
 
-        const numPrizes = prizes.length;
-        const arc = (2 * Math.PI) / numPrizes;
         let currentRotation = 0;
         let isSpinning = false;
+
+        // មុខងារដូរចំណងជើង
+        titleInput.oninput = (e) => {
+            appTitle.innerText = e.target.value || "បង្វិលកង សំណាង";
+        };
+        subtitleInput.oninput = (e) => {
+            appSubtitle.innerText = e.target.value || "សាកល្បងសំណាងរបស់អ្នក!";
+        };
+
+        function renderInputs() {
+            prizeInputsContainer.innerHTML = '';
+            prizes.forEach((prize, index) => {
+                const div = document.createElement('div');
+                div.className = 'flex gap-2';
+                div.innerHTML = `
+                    <input type="color" value="${prize.color}" onchange="updatePrizeColor(${index}, this.value)" class="w-10 h-10 rounded bg-transparent border-none cursor-pointer">
+                    <input type="text" value="${prize.text}" oninput="updatePrizeText(${index}, this.value)" class="flex-1 bg-slate-900 border border-slate-700 rounded-lg px-3 py-1 text-sm focus:border-emerald-500 outline-none">
+                    <button onclick="removePrize(${index})" class="text-red-500 px-2 hover:bg-red-500/10 rounded">✕</button>
+                `;
+                prizeInputsContainer.appendChild(div);
+            });
+            drawWheel();
+        }
+
+        function updatePrizeText(index, val) { prizes[index].text = val; drawWheel(); }
+        function updatePrizeColor(index, val) { prizes[index].color = val; drawWheel(); }
+        function removePrize(index) { 
+            if(prizes.length > 2) { prizes.splice(index, 1); renderInputs(); }
+        }
+        
+        addPrizeBtn.onclick = () => {
+            prizes.push({ text: "រង្វាន់ថ្មី", color: "#" + Math.floor(Math.random()*16777215).toString(16) });
+            renderInputs();
+        };
 
         function drawWheel() {
             const centerX = canvas.width / 2;
             const centerY = canvas.height / 2;
             const radius = centerX;
+            const arc = (2 * Math.PI) / prizes.length;
 
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
             prizes.forEach((prize, i) => {
                 const angle = i * arc;
-                
-                // Draw Sector
                 ctx.beginPath();
                 ctx.fillStyle = prize.color;
                 ctx.moveTo(centerX, centerY);
                 ctx.arc(centerX, centerY, radius, angle, angle + arc);
-                ctx.lineTo(centerX, centerY);
                 ctx.fill();
-                ctx.strokeStyle = 'rgba(255,255,255,0.1)';
-                ctx.lineWidth = 2;
+                ctx.strokeStyle = "rgba(255,255,255,0.2)";
                 ctx.stroke();
 
-                // Draw Text
                 ctx.save();
                 ctx.translate(centerX, centerY);
                 ctx.rotate(angle + arc / 2);
                 ctx.textAlign = "right";
-                ctx.fillStyle = "#ffffff";
+                ctx.fillStyle = "white";
                 ctx.font = "bold 14px 'Kantumruy Pro'";
-                ctx.shadowColor = "rgba(0,0,0,0.5)";
-                ctx.shadowBlur = 4;
                 ctx.fillText(prize.text, radius - 20, 5);
                 ctx.restore();
             });
@@ -154,64 +180,33 @@
 
         function spin() {
             if (isSpinning) return;
-
+            const duration = durationInput.value || 5;
+            canvas.style.transition = `transform ${duration}s cubic-bezier(0.15, 0, 0.15, 1)`;
             isSpinning = true;
             spinBtn.disabled = true;
-            spinBtn.classList.add('opacity-50', 'cursor-not-allowed');
-            statusText.innerText = "កំពុងបង្វិល...";
 
-            // Generate random rotation: current + 5 to 10 full spins + random offset
             const extraSpins = (Math.floor(Math.random() * 5) + 5) * 360;
             const randomOffset = Math.floor(Math.random() * 360);
-            const totalRotation = currentRotation + extraSpins + randomOffset;
-            
-            currentRotation = totalRotation;
-            canvas.style.transform = `rotate(${totalRotation}deg)`;
+            currentRotation += extraSpins + randomOffset;
+            canvas.style.transform = `rotate(${currentRotation}deg)`;
 
-            // Wait for animation to finish (5 seconds match CSS transition)
             setTimeout(() => {
                 isSpinning = false;
                 spinBtn.disabled = false;
-                spinBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-                statusText.innerText = "";
-                
-                calculateResult(totalRotation);
-            }, 5000);
+                const actualDeg = currentRotation % 360;
+                const arcSize = 360 / prizes.length;
+                const index = Math.floor((360 - actualDeg + 270) % 360 / arcSize);
+                document.getElementById('prizeResult').innerText = prizes[index].text;
+                document.getElementById('modal').classList.replace('hidden', 'flex');
+            }, duration * 1000);
         }
 
-        function calculateResult(rotation) {
-            // Normalize rotation to 0-360 degrees
-            const actualDeg = rotation % 360;
-            
-            // The pointer is at the top (270 degrees in canvas math)
-            // The wheel rotates clockwise. 
-            // We need to find which slice is at the top position.
-            const index = Math.floor((360 - actualDeg + 270) % 360 / (360 / numPrizes));
-            
-            showModal(prizes[index].text);
-        }
-
-        function showModal(text) {
-            prizeResult.innerText = text;
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-        }
-
-        closeModal.onclick = () => {
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
+        document.getElementById('closeModal').onclick = () => {
+            document.getElementById('modal').classList.replace('flex', 'hidden');
         };
 
-        spinBtn.addEventListener('click', spin);
-
-        // Initial draw
-        drawWheel();
-
-        // Responsive handling
-        window.addEventListener('resize', () => {
-            // If we had dynamic sizing, we would re-init here
-            drawWheel();
-        });
+        spinBtn.onclick = spin;
+        renderInputs();
     </script>
 </body>
 </html>
